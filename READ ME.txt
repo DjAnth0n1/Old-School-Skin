@@ -1,0 +1,25 @@
+#####OLD SCHOOL SKIN 2.3.4.1 BY Dj.Anth0n1#####
+
+This is a basic skin with 2 turntables and a 2 channel mixer.Trying to simulate the "feel" as close as possible.The skin is just for simple mixing-beatmatching without effects like the "old days". So, if you are interested in effects,waveforms,samplers e.tc. and all the modern stuff then this skin is not for you because non of the above are included-supported in this skin.
+
+The skin supports:
+1024x768 resolution (not resizable)
+4 hotcues per channel
+8 beatloops per channel
+3 band Eq with kill buttons and gain knob per channel
+Cue Button on the turntable (purists will hate me, I hate me too.But is a must)
+Waveform overview
+Spinnies
+AutoDj
+Record your mix
+Microphone Support
+And Track Info
+
+NOT INCLUDED:
+Manual beatlooping (looping)
+Effects and Quikeffects
+Waveforms
+Samplers
+
+Happy Mixxxing!!!!
+Dj.Anth0n1
