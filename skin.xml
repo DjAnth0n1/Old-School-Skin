@@ -1,0 +1,1736 @@
+<!-- 	
+	Old School Skin for Mixxx 2.3.4.x by Dj.Anth0n1
+	A simple skin with 2 turntables and a 2 channel mixer.
+	No effects,no samplers,no waveforms.
+	www.mixxx.org
+	Copyright (C) 2010-2023 Dj.Anth0n1 
+	--> 
+
+
+	
+<!DOCTYPE skin>           
+<skin>
+<manifest>
+    <title>Old_School</title>
+    <author>DjAnth0n1</author>
+    <version>2.3.5</version>
+    <description>A simple skin with 2 turntables and a 2 channel mixer.</description>
+    <language>en</language>
+    <license>Creative Commons Attribution, Share-Alike 3.0 Unported</license>
+	<attributes>
+	<!-- Set skin defaults. -->
+      <attribute config_key="[Master],num_decks">2</attribute>
+    <!--Optionally, make elements visible on skin load-->
+      <attribute config_key="[Decks],show_decks">1</attribute>
+    </attributes>
+</manifest>
+	  <ObjectName>Mixxx</ObjectName>
+	  <Style src="skin:style.qss"/>
+
+    <LaunchImageStyle>
+      LaunchImage {
+        background-color: #0f0f0f;
+      }
+      QLabel {
+        image: url(skin:../Old School/mixxx_logo_160x40.png);
+        padding: 0;
+        margin: 0px 2px 0px 2px;
+        border: none;
+        min-width: 160px;
+        min-height: 40px;
+        max-width: 160px;
+        max-height: 40px;
+      }
+      QProgressBar {
+        background-color: #333333;
+        border: none;
+        min-width: 164px;
+        min-height: 3px;
+        max-width: 164px;
+        max-height: 3px;
+      }
+      QProgressBar::chunk {
+        background-color: #FF6100;
+      }
+    </LaunchImageStyle>
+	<!--
+	******************************************************	
+	General- Background picture Search and Library display
+	******************************************************
+	-->	
+<WidgetGroup>
+  <Pos>0,0</Pos>
+  <Size>1024f,768f</Size>
+  <MinimumSize>1024,768</MinimumSize>
+  <Style>QGroupBox { background: url(skin:/Background.png); }</Style>
+</WidgetGroup>
+  
+<WidgetGroup>
+	 <Pos>1,468</Pos>
+    <SizePolicy>f,f</SizePolicy>
+    <Layout>vertical</Layout>
+    <Children>
+      <WidgetGroup>
+        <ObjectName>LibraryContainer</ObjectName>
+        <Size>1024f,279f</Size>
+        <Layout>horizontal</Layout>
+		<Children>
+		 <Splitter>
+         <Size>me,me</Size>
+         <SplitSizes>1,6</SplitSizes>
+         <Collapsible>1,0</Collapsible>
+         <SplitSizesConfigKey>[Skin],librarySidebar_splitsize</SplitSizesConfigKey>
+        <Children>
+          <!-- Sidebar etc. -->
+    <WidgetGroup>
+        <!-- Required for restoring the splitter sizes, otherwise the searchbox
+        would force.expand the left side.
+        Also required to avoid resize (shrink) glitch with long titles loaded
+        to the preview deck. -->
+            <SizePolicy>i,min</SizePolicy>
+            <Layout>vertical</Layout>
+             <Children>
+            <SearchBox></SearchBox>
+			<WidgetGroup><Size>,5f</Size></WidgetGroup>
+
+                  <!-- Tree View | Cover Art -->
+            <Splitter>
+            <Size>e,me</Size>
+            <SplitSizes>1,e</SplitSizes>
+            <Collapsible>0,0</Collapsible>
+            <Children>
+            <LibrarySidebar></LibrarySidebar>
+            
+         </Children>
+        </Splitter>
+
+         </Children>
+       </WidgetGroup><!-- Sidebar etc. -->
+
+          <Library>
+            <ShowButtonText>false</ShowButtonText>
+              <TrackTableBackgroundColorOpacity>0.250</TrackTableBackgroundColorOpacity>
+          </Library>
+
+            </Children>
+          </Splitter>
+        </Children>
+      </WidgetGroup><!-- LibraryContainer -->
+    </Children>
+  </WidgetGroup>
+	 
+	<!--
+	############################################################################################
+	############################################################################################
+	Section: Visual
+	############################################################################################
+	############################################################################################
+	-->
+	
+	<!--
+	**********************************************
+	Visaul- Waveform overview
+	**********************************************
+	-->
+	<Overview>
+		<Tooltip>Overview display of waveform</Tooltip>
+		<Channel>1</Channel>
+		<Pos>383,42</Pos>
+		<Size>127,20</Size>
+		<BgColor></BgColor>
+		<SignalColor>#3087BF</SignalColor>
+		<MarkerColor>#BBBBBB</MarkerColor>
+		<Connection>
+			<ConfigKey>[Channel1],playposition</ConfigKey>
+			<EmitOnDownPress>false</EmitOnDownPress>
+		</Connection>
+	</Overview>
+	<Overview>
+		<Tooltip>Overview display of waveform</Tooltip>
+		<Channel>2</Channel>
+		<Pos>514,42</Pos>
+		<Size>127,20</Size>
+		<BgColor></BgColor>
+		<SignalColor>#3087BF</SignalColor>
+		<MarkerColor>#BBBBBB</MarkerColor>
+		<Connection>
+			<ConfigKey>[Channel2],playposition</ConfigKey>
+			<EmitOnDownPress>false</EmitOnDownPress>
+		</Connection>
+	</Overview>
+	-->
+	<!--
+	**********************************************
+	Time
+	**********************************************
+	-->	
+	  <WidgetGroup>
+        <ObjectName>ClockWidget</ObjectName>
+        <Layout>horizontal</Layout>
+        <SizePolicy>f,f</SizePolicy>
+		<Pos>607,85</Pos>
+        <Children>
+          <Time>
+            <TooltipId>time</TooltipId>
+             <Style>font: 12px/12px;</Style>
+            <CustomFormat>hh:mm</CustomFormat>
+          </Time>
+        </Children>
+      </WidgetGroup>
+	<!--
+	**********************************************
+	Recording Button And Recoring Duration
+	**********************************************
+	-->	  
+	<PushButton>
+  <TooltipId></TooltipId>
+  <NumberStates>3</NumberStates>
+  <LeftClickIsPushButton>true</LeftClickIsPushButton>
+  <RightClickIsPushButton>true</RightClickIsPushButton>
+  <State>
+    <!-- RECORD OFF -->
+    <Number>0</Number>
+    <Pressed>mixer/rec_pr.png</Pressed>
+    <Unpressed>mixer/rec.png</Unpressed>
+  </State>
+  <State>
+    <!-- RECORD READY-->
+    <Number>1</Number>
+    <Pressed>mixer/rec_pr.png</Pressed>
+    <Unpressed>mixer/rec.png</Unpressed>
+  </State>
+  <State>
+    <!-- RECORD ON-->
+    <Number>2</Number>
+    <Pressed>mixer/rec_pr.png</Pressed>
+    <Unpressed>mixer/rec_pr.png</Unpressed>
+  </State>
+  <Pos>544,278</Pos>
+  <Connection>
+    <ConfigKey>[Recording],toggle_recording</ConfigKey>
+    <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+    <ButtonState>LeftButton</ButtonState>
+    <ConnectValueToWidget>false</ConnectValueToWidget>
+  </Connection>
+  <Connection>
+    <ConfigKey>[Recording],status</ConfigKey>
+    <ConnectValueFromWidget>false</ConnectValueFromWidget>
+  </Connection>
+</PushButton>  
+<RecordingDuration>
+  <Pos>555,255</Pos>
+  <Size>27,28</Size>
+  <Style>background-color: transparent; color: #ffffff;</Style>
+  <InactiveText>–-:-–</InactiveText>
+ </RecordingDuration>
+	<!--
+	**********************************************
+	Visual - Volume level display
+	**********************************************
+	-->	
+	<WidgetGroup>
+	<Pos>437,130</Pos>
+	<Layout>horizontal</Layout>
+	<Children>
+	<VuMeter>
+		<Tooltip>Channel volume display</Tooltip>
+		<PathVu>mixer/vu_pr.png</PathVu>
+		<PathBack>mixer/vu_un.png</PathBack>
+		<Horizontal>false</Horizontal>
+		<PeakHoldSize>4</PeakHoldSize>
+		<PeakHoldTime>500</PeakHoldTime>
+		<PeakFallTime>10</PeakFallTime>
+  		<PeakFallStep>2</PeakFallStep>		
+		<Connection>
+			<ConfigKey>[Channel1],VuMeter</ConfigKey>
+		</Connection>
+	</VuMeter>
+	</Children>
+   </WidgetGroup>
+    <WidgetGroup>
+    <Pos>489,130</Pos>
+     <Layout>horizontal</Layout>
+     <Children>
+	<VuMeter>
+		<Tooltip>Channel volume display</Tooltip>
+		<PathVu>mixer/vu_pr.png</PathVu>
+		<PathBack>mixer/vu_un.png</PathBack>
+		<Horizontal>false</Horizontal>
+		<PeakHoldSize>4</PeakHoldSize>
+		<PeakHoldTime>500</PeakHoldTime>
+		<PeakFallTime>10</PeakFallTime>
+  		<PeakFallStep>2</PeakFallStep>
+		<Connection>
+			<ConfigKey>[Channel2],VuMeter</ConfigKey>
+		</Connection>
+	</VuMeter>
+	</Children>
+   </WidgetGroup>
+ <WidgetGroup>
+   <Pos>550,130</Pos>
+   <Layout>horizontal</Layout>
+   <Children>
+	<VuMeter>
+	<Tooltip>Master channel volume for the left channel.</Tooltip>
+		<PathVu>mixer/mvu_pr.png</PathVu>
+		<PathBack>mixer/mvu_un.png</PathBack>
+		<PeakHoldSize>5</PeakHoldSize>
+		<PeakHoldTime>500</PeakHoldTime>
+		<PeakFallTime>50</PeakFallTime>
+		<PeakFallStep>2</PeakFallStep>
+	<Connection>
+		<ConfigKey>[Master],VuMeterL</ConfigKey>
+	</Connection>
+	</VuMeter>
+</Children>
+</WidgetGroup>
+<WidgetGroup>
+   <Pos>556,130</Pos>
+   <Layout>horizontal</Layout>
+   <Children>
+	<VuMeter>
+	<Tooltip>Master channel volume for the left channel.</Tooltip>
+		<PathVu>mixer/mvu_pr.png</PathVu>
+		<PathBack>mixer/mvu_un.png</PathBack>
+		<PeakHoldSize>5</PeakHoldSize>
+		<PeakHoldTime>500</PeakHoldTime>
+		<PeakFallTime>50</PeakFallTime>
+		<PeakFallStep>2</PeakFallStep>
+	<Connection>
+		<ConfigKey>[Master],VuMeterL</ConfigKey>
+	</Connection>
+	</VuMeter>
+	</Children>
+</WidgetGroup>
+   <WidgetGroup>
+   <Pos>573,130</Pos>
+   <Layout>horizontal</Layout>
+   <Children>
+	<VuMeter>
+<Tooltip>Master channel volume for the right channel.</Tooltip>
+		<PathVu>mixer/mvu_pr.png</PathVu>
+		<PathBack>mixer/mvu_un.png</PathBack>
+		<PeakHoldSize>5</PeakHoldSize>
+		<PeakHoldTime>500</PeakHoldTime>
+		<PeakFallTime>50</PeakFallTime>
+		<PeakFallStep>2</PeakFallStep>
+	<Connection>
+		<ConfigKey>[Master],VuMeterR</ConfigKey>
+	</Connection>
+	</VuMeter>
+</Children>
+</WidgetGroup>
+   <WidgetGroup>
+   <Pos>579,130</Pos>
+   <Layout>horizontal</Layout>
+   <Children>
+	<VuMeter>
+		<Tooltip>Master channel volume for the right channel.</Tooltip>
+		<PathVu>mixer/mvu_pr.png</PathVu>
+		<PathBack>mixer/mvu_un.png</PathBack>
+		<PeakHoldSize>5</PeakHoldSize>
+		<PeakHoldTime>500</PeakHoldTime>
+		<PeakFallTime>50</PeakFallTime>
+		<PeakFallStep>2</PeakFallStep>
+	<Connection>
+		<ConfigKey>[Master],VuMeterR</ConfigKey>
+	</Connection>
+	</VuMeter>
+</Children>
+</WidgetGroup>
+
+	<!--
+	############################################################################################
+	############################################################################################
+		Section: Text
+	############################################################################################
+	############################################################################################
+	-->
+
+	<!--
+	**********************************************
+	Text- Track information
+	**********************************************
+	-->
+<TrackProperty>
+	<TooltipId>track_title</TooltipId>
+	<Size>130f,16f</Size>
+	<Pos>381,17</Pos>
+	<Property>title</Property>
+	<Channel>1</Channel>
+	<Elide>right</Elide>
+  <Style>font: 11px/11px Lucida Grande, Lucida Sans Unicode, Arial, Verdana, sans-serif; 
+background-color: transparent; color: #E4E4E4; text-align: left; padding-left: 1%;
+	</Style>
+</TrackProperty>
+<TrackProperty>
+	<TooltipId>track_artist</TooltipId>
+	<Size>130f,16f</Size>
+	<Pos>381,6</Pos>
+	<Property>artist</Property>
+	<Channel>1</Channel>
+	<Elide>right</Elide>
+  <Style>font: bold 11px/11px Lucida Grande, Lucida Sans Unicode, Arial, Verdana, sans-serif; 
+background-color: transparent; color: #E4E4E4; text-align: left; padding-left: 1%;
+	</Style>
+</TrackProperty>
+<TrackProperty>
+	<TooltipId>track_title</TooltipId>
+	<Size>130f,16f</Size>
+	<Pos>510,17</Pos>
+	<Property>title</Property>
+	<Channel>2</Channel>
+	<Elide>right</Elide>
+  <Style>font: 11px/11px Lucida Grande, Lucida Sans Unicode, Arial, Verdana, sans-serif; 
+background-color: transparent; color: #E4E4E4; text-align: left; padding-left: 1%;
+	</Style>
+</TrackProperty>
+<TrackProperty>
+	<TooltipId>track_artist</TooltipId>
+	<Size>130f,16f</Size>
+	<Pos>510,6</Pos>
+	<Property>artist</Property>
+	<Channel>2</Channel>
+	<Elide>right</Elide>
+  <Style>font: bold 11px/11px Lucida Grande, Lucida Sans Unicode, Arial, Verdana, sans-serif; 
+background-color: transparent; color: #E4E4E4; text-align: left; padding-left: 1%;
+	</Style>
+</TrackProperty>
+	
+
+	<!--
+	**********************************************
+	Text- BPM number display
+	**********************************************
+	-->	
+	<NumberBpm>
+		<Tooltip>Tempo display (BPM=Beat Per Minute)</Tooltip>
+		<Channel>1</Channel>
+		<Pos>440,93</Pos>
+		<Size>47f,24f</Size>
+		<Style>font: bold 13px/15px Lucida Grande, Lucida Sans Unicode, Arial, Verdana, sans-serif; 
+		background-color: transparent; color: #b50017; text-align: left;padding-left: 1%;
+		</Style>
+		<NumberOfDigits>1</NumberOfDigits>
+		<Connection>
+			<ConfigKey>[Channel1],bpm</ConfigKey>
+		</Connection>
+	</NumberBpm>
+	<NumberBpm>
+		<Tooltip>Tempo display (BPM=Beat Per Minute)</Tooltip>
+		<Channel>2</Channel>
+		<Pos>490,93</Pos>
+		<Size>47f,24f</Size>
+		<Style>font: bold 13px/15px Lucida Grande, Lucida Sans Unicode, Arial, Verdana, sans-serif; 
+		background-color: transparent; color: #b50017; text-align: left;padding-left: 1%;
+		</Style>
+		<NumberOfDigits>1</NumberOfDigits>
+		<Connection>
+			<ConfigKey>[Channel2],bpm</ConfigKey>
+		</Connection>
+	</NumberBpm>
+
+	<!--
+	**********************************************
+	Text- Playing position / Time remaining
+	**********************************************
+	-->	
+	<NumberPos>
+		<Tooltip>Play position/remaining time</Tooltip>
+		<Channel>1</Channel>
+		<Pos>381,23</Pos>
+		<Size>50f,24f</Size>
+		<Style>font: 11px/11px Lucida Grande, Lucida Sans Unicode, Arial, Verdana, sans-serif; 
+		background-color: transparent; color: #E4E4E4; text-align: left;padding-left: 1%;
+		</Style>
+		<NumberOfDigits>3</NumberOfDigits>
+		<Connection>
+			<ConfigKey>[Channel1],playposition</ConfigKey>
+		</Connection>
+	</NumberPos>
+	<NumberPos>
+		<Tooltip>Play position/remaining time</Tooltip>
+		<Channel>2</Channel>
+		<Pos>510,23</Pos>
+		<Size>50f,24f</Size>
+		<Style>font: 11px/11px Lucida Grande, Lucida Sans Unicode, Arial, Verdana, sans-serif; 
+		background-color: transparent; color: #E4E4E4; text-align: left;padding-left: 1%;
+		</Style>
+		<NumberOfDigits>6</NumberOfDigits>
+		<Connection>
+			<ConfigKey>[Channel2],playposition</ConfigKey>
+		</Connection>
+	</NumberPos>
+<!--
+	**********************************************
+	Musical key display
+	**********************************************
+	-->
+<Key>
+  <TooltipId>visual_key</TooltipId>
+  <DisplayCents>false</DisplayCents> <!-- false (default) or true) -->
+  <Pos>460,23</Pos>
+  <Size>50f,24f</Size>
+  <Style>font: bold 11px/11px Lucida Grande, Lucida Sans Unicode, Arial, Verdana, sans-serif; 
+		background-color: transparent; color: #c37500; text-align: left;padding-left: 1%;
+		</Style>
+  <Connection>
+    <ConfigKey>[Channel1],visual_key</ConfigKey>
+  </Connection>
+</Key>
+	<Key>
+  <TooltipId>visual_key</TooltipId>
+  <DisplayCents>false</DisplayCents> <!-- false (default) or true) -->
+  <Pos>589,23</Pos>
+  <Size>50f,24f</Size>
+  <Style>font: bold 11px/11px Lucida Grande, Lucida Sans Unicode, Arial, Verdana, sans-serif; 
+		background-color: transparent; color: #c37500; text-align: left;padding-left: 1%;
+		</Style>
+  <Connection>
+    <ConfigKey>[Channel2],visual_key</ConfigKey>
+  </Connection>
+</Key>
+	
+
+
+	<!--
+	############################################################################################
+	############################################################################################
+	Section: Slider
+	############################################################################################
+	############################################################################################
+	-->
+
+	<!--
+	**********************************************
+	Slider- Channel Volume
+	**********************************************
+	-->
+	<SliderComposed>
+		<Tooltip>Channel 1 volume control</Tooltip>
+		<Handle>mixer/slider_v1.png</Handle>
+		<Slider>mixer/slider_v_bg.png</Slider>
+		<Pos>440,302</Pos>
+		<Horizontal>false</Horizontal>
+		<Connection>
+			<ConfigKey>[Channel1],volume</ConfigKey>
+			<EmitOnDownPress>false</EmitOnDownPress>
+		</Connection>
+	</SliderComposed>	
+	<SliderComposed>
+		<Tooltip>Channel 2 volume control</Tooltip>
+		<Handle>mixer/slider_v1.png</Handle>
+		<Slider>mixer/slider_v_bg.png</Slider>
+		<Pos>493,302</Pos>
+		<Horizontal>false</Horizontal>
+		<Connection>
+			<ConfigKey>[Channel2],volume</ConfigKey>
+			<EmitOnDownPress>false</EmitOnDownPress>
+		</Connection>
+	</SliderComposed>
+	
+	<!--
+	**********************************************
+	Slider- Crossfader
+	**********************************************
+	-->	
+	<SliderComposed>
+		<Tooltip>Crossfader</Tooltip>
+		<Handle>mixer/slider_h.png</Handle>
+		<Slider>mixer/xfader_bg.png</Slider>
+		<Pos>445,410</Pos>
+		<Horizontal>true</Horizontal>
+		<Connection>
+			<ConfigKey>[Master],crossfader</ConfigKey>
+			<EmitOnDownPress>false</EmitOnDownPress>
+		</Connection>
+	</SliderComposed>
+	
+    <!--
+	**********************************************	
+	Slider- Pitch control
+	**********************************************
+	-->
+	<SliderComposed>
+		<Tooltip>rate</Tooltip>
+		<Handle>turntable/slider_v.png</Handle>
+		<Slider>turntable/slider_hole_bg.png</Slider>
+		<Pos>192,30</Pos>
+		<Horizontal>true</Horizontal>
+		<Connection>
+			<ConfigKey>[Channel1],rate</ConfigKey>
+			<EmitOnDownPress>false</EmitOnDownPress>
+		</Connection>
+	</SliderComposed>
+	<SliderComposed>
+		<Tooltip>rate</Tooltip>
+		<Handle>turntable/slider_v.png</Handle>
+		<Slider>turntable/slider_hole_bg.png</Slider>
+		<Pos>849,30</Pos>
+		<Horizontal>true</Horizontal>
+		<Connection>
+			<ConfigKey>[Channel2],rate</ConfigKey>
+			<EmitOnDownPress>false</EmitOnDownPress>
+		</Connection>
+	</SliderComposed>
+	
+	<!--
+	############################################################################################
+	############################################################################################
+	Section: Buttons
+	############################################################################################
+	############################################################################################
+	-->
+	
+    <!--
+    ****************************************
+     Button- Play
+    ****************************************
+    -->
+	<PushButton>
+		<Tooltip>Left Click: Pause/play, Right Click: Set cue point</Tooltip>
+		<NumberStates>2</NumberStates>
+		<State>
+			<Number>0</Number>
+			<Pressed>turntable/play_pr_un.png</Pressed>
+			<Unpressed>turntable/play_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>turntable/play_un_pr.png</Pressed>
+			<Unpressed>turntable/play_pr.png</Unpressed>
+		</State>
+		<Pos>321,408</Pos>
+	<Connection>
+			<ConfigKey>[Channel1],play</ConfigKey>
+			<EmitOnDownPress>true</EmitOnDownPress>
+			<ButtonState>LeftButton</ButtonState>
+		</Connection>
+		<Connection>
+			<ConfigKey>[Channel1],cue_set</ConfigKey>
+			<EmitOnDownPress>true</EmitOnDownPress>
+			<ButtonState>RightButton</ButtonState>
+			</Connection>
+    </PushButton>    
+	<PushButton>
+		<Tooltip>Left Click: Pause/play, Right Click: Set cue point</Tooltip>
+		<NumberStates>2</NumberStates>
+		<State>
+			<Number>0</Number>
+			<Pressed>turntable/play_pr_un.png</Pressed>
+			<Unpressed>turntable/play_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>turntable/play_un_pr.png</Pressed>
+			<Unpressed>turntable/play_pr.png</Unpressed>
+		</State>
+		<Pos>980,408</Pos>
+		<Connection>
+			<ConfigKey>[Channel2],play</ConfigKey>
+			<EmitOnDownPress>true</EmitOnDownPress>
+			<ButtonState>LeftButton</ButtonState>
+		</Connection>
+		<Connection>
+			<ConfigKey>[Channel2],cue_set</ConfigKey>
+			<EmitOnDownPress>true</EmitOnDownPress>
+			<ButtonState>RightButton</ButtonState>
+			</Connection>
+	</PushButton>
+
+	<!--
+	**********************************************
+	Button- Cue
+	**********************************************
+	-->
+    <PushButton>
+        <Tooltip>Go to and play (while playing), Set cue point (while stopped), Go to and stop (right-click)</Tooltip>
+        <NumberStates>1</NumberStates>
+        <State>
+            <Number>0</Number>
+            <Pressed>turntable/cue_pr.png</Pressed>
+            <Unpressed>turntable/cue_un.png</Unpressed>
+        </State>
+        <Pos>323,383</Pos>
+        <Connection>
+            <ConfigKey>[Channel1],cue_default</ConfigKey>
+            <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>LeftButton</ButtonState>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel1],cue_gotoandstop</ConfigKey>
+            <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>RightButton</ButtonState>
+        </Connection>
+    </PushButton>
+    <PushButton>
+        <Tooltip>Go to and play (while playing), Set cue point (while stopped), Go to and stop (right-click)</Tooltip>
+        <NumberStates>1</NumberStates>
+        <State>
+            <Number>0</Number>
+            <Pressed>turntable/cue_pr.png</Pressed>
+            <Unpressed>turntable/cue_un.png</Unpressed>
+        </State>
+        <Pos>982,383</Pos>
+        <Connection>
+            <ConfigKey>[Channel2],cue_default</ConfigKey>
+            <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>LeftButton</ButtonState>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel2],cue_gotoandstop</ConfigKey>
+            <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>RightButton</ButtonState>
+        </Connection>
+    </PushButton>
+    
+    <!--
+	**********************************************
+	Button- Hotcue
+	**********************************************
+	-->
+    <PushButton>
+        <Tooltip>Set and activate Hotcue, delete Hotcue (right-click)</Tooltip>
+        <NumberStates>2</NumberStates>
+		<LeftClickIsPushButton>true</LeftClickIsPushButton>
+		<RightClickIsPushButton>true</RightClickIsPushButton>
+       <State>
+            <Number>0</Number>
+            <Pressed>mixer/hc1_pr.png</Pressed>
+            <Unpressed>mixer/hc1_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/hc1_un.png</Pressed>
+			<Unpressed>mixer/hc1_pr.png</Unpressed>
+		</State>
+        <Pos>542,325</Pos>
+        <Connection>
+            <ConfigKey>[Channel1],hotcue_1_activate</ConfigKey>
+            <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>LeftButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel1],hotcue_1_clear</ConfigKey>
+           <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>RightButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel1],hotcue_1_enabled</ConfigKey>
+           <ConnectValueFromWidget>false</ConnectValueFromWidget>
+        </Connection>
+</PushButton>
+<PushButton>
+        <Tooltip>Set and activate Hotcue, delete Hotcue (right-click)</Tooltip>
+        <NumberStates>2</NumberStates>
+		<LeftClickIsPushButton>true</LeftClickIsPushButton>
+		<RightClickIsPushButton>true</RightClickIsPushButton>
+        <State>
+            <Number>0</Number>
+            <Pressed>mixer/hc2_pr.png</Pressed>
+            <Unpressed>mixer/hc2_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/hc2_un.png</Pressed>
+			<Unpressed>mixer/hc2_pr.png</Unpressed>
+		</State>
+        <Pos>544,345</Pos>
+        <Connection>
+            <ConfigKey>[Channel1],hotcue_2_activate</ConfigKey>
+            <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>LeftButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+      </Connection>
+      <Connection>
+            <ConfigKey>[Channel1],hotcue_2_clear</ConfigKey>
+           <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>RightButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel1],hotcue_2_enabled</ConfigKey>
+           <ConnectValueFromWidget>false</ConnectValueFromWidget>
+        </Connection>
+</PushButton>
+<PushButton>
+        <Tooltip>Set and activate Hotcue, delete Hotcue (right-click)</Tooltip>
+        <NumberStates>2</NumberStates>
+		<LeftClickIsPushButton>true</LeftClickIsPushButton>
+		<RightClickIsPushButton>true</RightClickIsPushButton>
+        <State>
+            <Number>0</Number>
+            <Pressed>mixer/hc3_pr.png</Pressed>
+            <Unpressed>mixer/hc3_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/hc3_un.png</Pressed>
+			<Unpressed>mixer/hc3_pr.png</Unpressed>
+		</State>
+        <Pos>542,367</Pos>
+        <Connection>
+            <ConfigKey>[Channel1],hotcue_3_activate</ConfigKey>
+            <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>LeftButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel1],hotcue_3_clear</ConfigKey>
+           <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>RightButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel1],hotcue_3_enabled</ConfigKey>
+           <ConnectValueFromWidget>false</ConnectValueFromWidget>
+        </Connection>
+    </PushButton>
+<PushButton>
+        <Tooltip>Set and activate Hotcue, delete Hotcue (right-click)</Tooltip>
+       <NumberStates>2</NumberStates>
+		<LeftClickIsPushButton>true</LeftClickIsPushButton>
+		<RightClickIsPushButton>true</RightClickIsPushButton>
+        <State>
+            <Number>0</Number>
+            <Pressed>mixer/hc4_pr.png</Pressed>
+            <Unpressed>mixer/hc4_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/hc4_un.png</Pressed>
+			<Unpressed>mixer/hc4_pr.png</Unpressed>
+		</State>
+        <Pos>544,387</Pos>
+        <Connection>
+            <ConfigKey>[Channel1],hotcue_4_activate</ConfigKey>
+            <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>LeftButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel1],hotcue_4_clear</ConfigKey>
+           <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>RightButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel1],hotcue_4_enabled</ConfigKey>
+           <ConnectValueFromWidget>false</ConnectValueFromWidget>
+        </Connection>
+    </PushButton>
+<PushButton>
+        <Tooltip>Set and activate Hotcue, delete Hotcue (right-click)</Tooltip>
+        <NumberStates>2</NumberStates>
+		<LeftClickIsPushButton>true</LeftClickIsPushButton>
+		<RightClickIsPushButton>true</RightClickIsPushButton>
+        <State>
+            <Number>0</Number>
+            <Pressed>mixer/hc1_pr.png</Pressed>
+            <Unpressed>mixer/hc1_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/hc1_un.png</Pressed>
+			<Unpressed>mixer/hc1_pr.png</Unpressed>
+		</State>
+        <Pos>568,325</Pos>
+        <Connection>
+            <ConfigKey>[Channel2],hotcue_1_activate</ConfigKey>
+            <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>LeftButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel2],hotcue_1_clear</ConfigKey>
+           <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>RightButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel2],hotcue_1_enabled</ConfigKey>
+           <ConnectValueFromWidget>false</ConnectValueFromWidget>
+        </Connection>
+    </PushButton>
+<PushButton>
+        <Tooltip>Set and activate Hotcue, delete Hotcue (right-click)</Tooltip>
+         <NumberStates>2</NumberStates>
+		<LeftClickIsPushButton>true</LeftClickIsPushButton>
+		<RightClickIsPushButton>true</RightClickIsPushButton>
+        <State>
+            <Number>0</Number>
+            <Pressed>mixer/hc2_pr.png</Pressed>
+            <Unpressed>mixer/hc2_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/hc2_un.png</Pressed>
+			<Unpressed>mixer/hc2_pr.png</Unpressed>
+		</State>
+        <Pos>570,345</Pos>
+        <Connection>
+            <ConfigKey>[Channel2],hotcue_2_activate</ConfigKey>
+            <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>LeftButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel2],hotcue_2_clear</ConfigKey>
+           <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>RightButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel2],hotcue_2_enabled</ConfigKey>
+           <ConnectValueFromWidget>false</ConnectValueFromWidget>
+        </Connection>
+    </PushButton>
+<PushButton>
+        <Tooltip>Set and activate Hotcue, delete Hotcue (right-click)</Tooltip>
+        <NumberStates>2</NumberStates>
+		<LeftClickIsPushButton>true</LeftClickIsPushButton>
+		<RightClickIsPushButton>true</RightClickIsPushButton>
+        <State>
+            <Number>0</Number>
+            <Pressed>mixer/hc3_pr.png</Pressed>
+            <Unpressed>mixer/hc3_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/hc3_un.png</Pressed>
+			<Unpressed>mixer/hc3_pr.png</Unpressed>
+		</State>
+        <Pos>568,367</Pos>
+        <Connection>
+            <ConfigKey>[Channel2],hotcue_3_activate</ConfigKey>
+            <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>LeftButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel2],hotcue_3_clear</ConfigKey>
+           <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>RightButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel2],hotcue_3_enabled</ConfigKey>
+           <ConnectValueFromWidget>false</ConnectValueFromWidget>
+        </Connection>
+    </PushButton>
+<PushButton>
+        <Tooltip>Set and activate Hotcue, delete Hotcue (right-click)</Tooltip>
+         <NumberStates>2</NumberStates>
+<LeftClickIsPushButton>true</LeftClickIsPushButton>
+<RightClickIsPushButton>true</RightClickIsPushButton>
+        <State>
+            <Number>0</Number>
+            <Pressed>mixer/hc4_pr.png</Pressed>
+            <Unpressed>mixer/hc4_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/hc4_un.png</Pressed>
+			<Unpressed>mixer/hc4_pr.png</Unpressed>
+		</State>
+        <Pos>570,387</Pos>
+        <Connection>
+            <ConfigKey>[Channel2],hotcue_4_activate</ConfigKey>
+            <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>LeftButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel2],hotcue_4_clear</ConfigKey>
+           <EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+            <ButtonState>RightButton</ButtonState>
+			<ConnectValueToWidget>false</ConnectValueToWidget>
+        </Connection>
+        <Connection>
+            <ConfigKey>[Channel2],hotcue_4_enabled</ConfigKey>
+           <ConnectValueFromWidget>false</ConnectValueFromWidget>
+      </Connection>
+</PushButton>
+      		
+	<!--
+	**********************************************
+	Button - Beatloop
+	**********************************************
+	-->
+	
+<PushButton>
+	<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+	<NumberStates>2</NumberStates>						
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop1_0125.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_0125.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop1_0125_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_0125_over.png</Unpressed>
+	</State>
+	<Pos>596,270</Pos>
+	<Connection>
+	<ConfigKey>[Channel1],beatloop_0.125</ConfigKey>
+	<EmitOnPress>true</EmitOnPress>
+	<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+
+<PushButton>
+	<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+	<NumberStates>2</NumberStates>
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop1_0250.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_0250.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop1_0250_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_0250_over.png</Unpressed>
+	</State>
+		<Pos>596,290</Pos>
+		<Connection>
+		<ConfigKey>[Channel1],beatloop_0.25</ConfigKey>
+		<EmitOnPress>true</EmitOnPress>
+		<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+
+<PushButton>
+	<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+	<NumberStates>2</NumberStates>
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop1_0500.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_0500.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop1_0500_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_0500_over.png</Unpressed>
+	</State>
+		<Pos>596,310</Pos>
+		<Connection>
+		<ConfigKey>[Channel1],beatloop_0.5</ConfigKey>
+		<EmitOnPress>true</EmitOnPress>
+		<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+
+<PushButton>
+	<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>	
+	<NumberStates>2</NumberStates>
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop1_1.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_1.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop1_1_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_1_over.png</Unpressed>
+	</State>
+		<Pos>596,330</Pos>
+	<Connection>
+		<ConfigKey>[Channel1],beatloop_1</ConfigKey>
+		<EmitOnPress>true</EmitOnPress>
+		<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+<PushButton>
+	<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+	<NumberStates>2</NumberStates>
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop1_2.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_2.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop1_2_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_2_over.png</Unpressed>
+	</State>
+		<Pos>596,350</Pos>
+		<Connection>
+		<ConfigKey>[Channel1],beatloop_2</ConfigKey>
+		<EmitOnPress>true</EmitOnPress>
+		<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+
+<PushButton>
+		<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+		<NumberStates>2</NumberStates>
+	<State>
+	<Number>0</Number>
+		<Pressed>mixer/btn_beatloop1_4.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_4.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop1_4_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_4_over.png</Unpressed>
+	</State>
+	<Pos>596,370</Pos>
+	<Connection>
+		<ConfigKey>[Channel1],beatloop_4</ConfigKey>
+		<EmitOnPress>true</EmitOnPress>
+		<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+<PushButton>
+		<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+		<NumberStates>2</NumberStates>
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop1_8_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_8.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop1_8.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_8_over.png</Unpressed>
+	</State>
+		<Pos>596,390</Pos>
+	<Connection>
+		<ConfigKey>[Channel1],beatloop_8</ConfigKey>
+		<EmitOnPress>true</EmitOnPress>
+		<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+<PushButton>
+		<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+		<NumberStates>2</NumberStates>
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop1_16.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_16.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop1_16_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop1_16_over.png</Unpressed>
+	</State>
+	<Pos>596,410</Pos>
+	<Connection>
+		<ConfigKey>[Channel1],beatloop_16</ConfigKey>
+		<EmitOnPress>true</EmitOnPress>
+		<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+
+	<!--
+	**********************************************
+	Button - Beatloop Deck 2
+	**********************************************
+	-->
+<PushButton>
+		<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+		<NumberStates>2</NumberStates>
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop2_0125.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_0125.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop2_0125_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_0125_over.png</Unpressed>
+	</State>
+		<Pos>626,270</Pos>
+	<Connection>
+		<ConfigKey>[Channel2],beatloop_0.125</ConfigKey>
+		<EmitOnPress>true</EmitOnPress>
+		<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+
+<PushButton>
+		<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+		<NumberStates>2</NumberStates>
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop2_0250.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_0250.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop2_0250_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_0250_over.png</Unpressed>
+	</State>
+		<Pos>626,290</Pos>
+	<Connection>
+			<ConfigKey>[Channel2],beatloop_0.25</ConfigKey>
+			<EmitOnPress>true</EmitOnPress>
+			<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+
+<PushButton>
+		<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+		<NumberStates>2</NumberStates>
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop2_0500.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_0500.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop2_0500_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_0500_over.png</Unpressed>
+	</State>
+		<Pos>626,310</Pos>
+	<Connection>
+		<ConfigKey>[Channel2],beatloop_0.5</ConfigKey>
+		<EmitOnPress>true</EmitOnPress>
+		<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+
+<PushButton>
+		<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+		<NumberStates>2</NumberStates>
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop2_1.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_1.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop2_1_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_1_over.png</Unpressed>
+	</State>
+		<Pos>626,330</Pos>
+	<Connection>
+		<ConfigKey>[Channel2],beatloop_1</ConfigKey>
+		<EmitOnPress>true</EmitOnPress>
+		<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+
+<PushButton>
+		<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+		<NumberStates>2</NumberStates>
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop2_2.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_2.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop2_2_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_2_over.png</Unpressed>
+	</State>
+		<Pos>626,350</Pos>
+	<Connection>
+		<ConfigKey>[Channel2],beatloop_2</ConfigKey>
+		<EmitOnPress>true</EmitOnPress>
+		<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+
+<PushButton>
+		<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+		<NumberStates>2</NumberStates>
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop2_4.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_4.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop2_4_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_4_over.png</Unpressed>
+	</State>
+		<Pos>626,370</Pos>
+	<Connection>
+		<ConfigKey>[Channel2],beatloop_4</ConfigKey>
+		<EmitOnPress>true</EmitOnPress>
+		<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+
+<PushButton>
+		<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+		<NumberStates>2</NumberStates>
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop2_8_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_8.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop2_8.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_8_over.png</Unpressed>
+	</State>
+		<Pos>626,390</Pos>
+	<Connection>
+		<ConfigKey>[Channel2],beatloop_8</ConfigKey>
+		<EmitOnPress>true</EmitOnPress>
+		<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+
+<PushButton>
+		<Tooltip>Beatloop&#10;Setup a loop over X beats&#10;</Tooltip>
+		<NumberStates>2</NumberStates>
+	<State>
+		<Number>0</Number>
+		<Pressed>mixer/btn_beatloop2_16.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_16.png</Unpressed>
+	</State>
+	<State>
+		<Number>1</Number>
+		<Pressed>mixer/btn_beatloop2_16_over.png</Pressed>
+		<Unpressed>mixer/btn_beatloop2_16_over.png</Unpressed>
+	</State>
+		<Pos>626,410</Pos>
+	<Connection>
+		<ConfigKey>[Channel2],beatloop_16</ConfigKey>
+		<EmitOnPress>true</EmitOnPress>
+		<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+
+	<!--
+	**********************************************
+	Button- Prelisten / Monitoring
+	**********************************************
+	-->
+	
+	<PushButton>
+		<Tooltip>Headphone prelisten for Channel 1</Tooltip>
+		<NumberStates>2</NumberStates>
+		<State>
+			<Number>0</Number>
+			<Pressed>mixer/pfl_pr.png</Pressed>
+			<Unpressed>mixer/pfl_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/pfl_un.png</Pressed>
+			<Unpressed>mixer/pfl_pr.png</Unpressed>
+		</State>
+		<Pos>438,272</Pos>
+		<Connection>
+			<ConfigKey>[Channel1],pfl</ConfigKey>
+		</Connection>
+	</PushButton>	
+	<PushButton>
+		<Tooltip>Headphone prelisten for Channel 2</Tooltip>
+		<NumberStates>2</NumberStates>
+		<State>
+			<Number>0</Number>
+			<Pressed>mixer/pfl_pr.png</Pressed>
+			<Unpressed>mixer/pfl_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/pfl_un.png</Pressed>
+			<Unpressed>mixer/pfl_pr.png</Unpressed>
+		</State>
+		<Pos>492,272</Pos>
+		<Connection>
+			<ConfigKey>[Channel2],pfl</ConfigKey>
+		</Connection>
+	</PushButton>>
+			
+	<!--					
+	**********************************************
+	Button- Frequency Kill
+	**********************************************
+	-->
+
+	<PushButton>
+		<Tooltip>Temporary bass kill</Tooltip>
+		<NumberStates>2</NumberStates>
+		<State>
+			<Number>0</Number>
+			<Pressed>mixer/kill_pr.png</Pressed>
+			<Unpressed>mixer/kill_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/kill_un.png</Pressed>
+			<Unpressed>mixer/kill_pr.png</Unpressed>
+		</State>
+		<Pos>477,232</Pos>
+		<Connection>
+			<ConfigKey>[Channel1],filterLowKill</ConfigKey>
+			<EmitOnDownPress>true</EmitOnDownPress>
+			<ButtonState>LeftButton</ButtonState>
+		</Connection>
+	</PushButton>
+		
+	<PushButton>
+		<Tooltip>Temporary bass kill</Tooltip>
+		<NumberStates>2</NumberStates>
+		<State>
+			<Number>0</Number>
+			<Pressed>mixer/kill_pr.png</Pressed>
+			<Unpressed>mixer/kill_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/kill_un.png</Pressed>
+			<Unpressed>mixer/kill_pr.png</Unpressed>
+		</State>
+		<Pos>530,232</Pos>
+		<Connection>
+			<ConfigKey>[Channel2],filterLowKill</ConfigKey>
+			<EmitOnDownPress>true</EmitOnDownPress>
+			<ButtonState>LeftButton</ButtonState>
+		</Connection>
+	</PushButton>
+	<PushButton>
+		<Tooltip>Temporary Mid kill</Tooltip>
+		<NumberStates>2</NumberStates>
+		<State>
+			<Number>0</Number>
+			<Pressed>mixer/kill_pr.png</Pressed>
+			<Unpressed>mixer/kill_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/kill_un.png</Pressed>
+			<Unpressed>mixer/kill_pr.png</Unpressed>
+		</State>
+		<Pos>477,198</Pos>
+		<Connection>
+			<ConfigKey>[Channel1],filterMidKill</ConfigKey>
+			<EmitOnDownPress>true</EmitOnDownPress>
+			<ButtonState>LeftButton</ButtonState>
+		</Connection>
+	</PushButton>
+	<PushButton>
+		<Tooltip>Temporary Mid kill</Tooltip>
+		<NumberStates>2</NumberStates>
+		<State>
+			<Number>0</Number>
+			<Pressed>mixer/kill_pr.png</Pressed>
+			<Unpressed>mixer/kill_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/kill_un.png</Pressed>
+			<Unpressed>mixer/kill_pr.png</Unpressed>
+		</State>
+		<Pos>530,198</Pos>
+		<Connection>
+			<ConfigKey>[Channel2],filterMidKill</ConfigKey>
+			<EmitOnDownPress>true</EmitOnDownPress>
+			<ButtonState>LeftButton</ButtonState>
+		</Connection>
+	</PushButton>
+	<PushButton>
+		<Tooltip>Temporary high kill</Tooltip>
+		<NumberStates>2</NumberStates>
+		<State>
+			<Number>0</Number>
+			<Pressed>mixer/kill_pr.png</Pressed>
+			<Unpressed>mixer/kill_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/kill_un.png</Pressed>
+			<Unpressed>mixer/kill_pr.png</Unpressed>
+		</State>
+		<Pos>477,164</Pos>
+		<Connection>
+			<ConfigKey>[Channel1],filterHighKill</ConfigKey>
+			<EmitOnDownPress>true</EmitOnDownPress>
+			<ButtonState>LeftButton</ButtonState>
+		</Connection>
+	</PushButton>
+	<PushButton>
+		<Tooltip>Temporary high kill</Tooltip>
+		<NumberStates>2</NumberStates>
+		<State>
+			<Number>0</Number>
+			<Pressed>mixer/kill_pr.png</Pressed>
+			<Unpressed>mixer/kill_un.png</Unpressed>
+		</State>
+		<State>
+			<Number>1</Number>
+			<Pressed>mixer/kill_un.png</Pressed>
+			<Unpressed>mixer/kill_pr.png</Unpressed>
+		</State>
+		<Pos>530,164</Pos>
+		<Connection>
+			<ConfigKey>[Channel2],filterHighKill</ConfigKey>
+			<EmitOnDownPress>true</EmitOnDownPress>
+			<ButtonState>LeftButton</ButtonState>
+		</Connection>
+	</PushButton>
+	
+	<!--
+	****************************************
+	Button- Talkover
+	****************************************
+	-->
+	
+<PushButton>
+		<Tooltip>Microphone talkover&#10;Hold-to-talk and mix microphone input into the master output.&#10;</Tooltip>
+		<NumberStates>1</NumberStates>
+		<State>
+		<Number>0</Number>
+		<Pressed>mixer/talk_over.png</Pressed>
+		<Unpressed>mixer/talk.png</Unpressed>
+	</State>
+	<Pos>380,185</Pos>
+	<Connection>
+	<ConfigKey>[Microphone],talkover</ConfigKey>
+	<EmitOnPressAndRelease>true</EmitOnPressAndRelease>
+	<ButtonState>LeftButton</ButtonState>
+	</Connection>
+</PushButton>
+	
+	<!--
+	**********************************************
+	Knob- Microphone Volume
+	**********************************************
+	-->
+	
+	<KnobComposed>
+		<Tooltip>Adjusts the microphone volume.&#10;Right-click: Reset to default value&#10;</Tooltip>
+		<Size>28f,28f</Size>
+		<Knob>mixer/knob_black<Variable name="color"/>.png</Knob>
+		<BackPath>mixer/knob_black.png</BackPath>
+		<MinAngle>0</MinAngle>
+		<MaxAngle>305</MaxAngle>
+		<KnobCenterYOffset>0</KnobCenterYOffset>
+		<Pos>386,143</Pos>
+		<Connection>
+		<ConfigKey>[Microphone],volume</ConfigKey>
+		</Connection>
+	</KnobComposed>
+
+	<!--	
+	############################################################################################
+	############################################################################################
+	Section: RotaryFader 
+	############################################################################################
+	############################################################################################
+	-->
+	
+	<!--
+	**********************************************
+	RotaryFader- Master volume & balance
+	**********************************************
+	-->
+
+	<KnobComposed>
+		<Tooltip>Master volume control</Tooltip>
+		<Size>26f,26f</Size>
+		<Knob>mixer/knob_grey_reversed<Variable name="color"/>.png</Knob>
+		<BackPath>mixer/knob_grey_reversed.png</BackPath>
+		<MinAngle>60</MinAngle>
+		<MaxAngle>350</MaxAngle>
+		<KnobCenterYOffset>0</KnobCenterYOffset>
+		<Pos>610,130</Pos>
+		<Connection>
+			<ConfigKey>[Master],volume</ConfigKey>
+		</Connection>
+	</KnobComposed>
+	<KnobComposed>
+		<Tooltip>Master balance control</Tooltip>
+		<Size>26f,26f</Size>
+		<Knob>mixer/knob_grey_reversed<Variable name="color"/>.png</Knob>
+		<BackPath>mixer/knob_grey_reversed.png</BackPath>
+		<MinAngle>60</MinAngle>
+		<MaxAngle>350</MaxAngle>
+		<KnobCenterYOffset>0</KnobCenterYOffset>
+		<Pos>610,174</Pos>
+		<Connection>
+			<ConfigKey>[Master],balance</ConfigKey>
+		</Connection>
+	</KnobComposed>
+			
+	<!--
+	**********************************************
+	RotaryFader- Headphone volume and mix
+	**********************************************
+	-->
+	
+	<KnobComposed>
+		<Tooltip>Headphone volume control</Tooltip>
+		<Size>26f,26f</Size>
+		<Knob>mixer/knob_grey_reversed<Variable name="color"/>.png</Knob>
+		<BackPath>mixer/knob_grey_reversed.png</BackPath>
+		<MinAngle>60</MinAngle>
+		<MaxAngle>350</MaxAngle>
+		<KnobCenterYOffset>0</KnobCenterYOffset>
+		<Pos>388,335</Pos>
+		<Connection>
+			<ConfigKey>[Master],headVolume</ConfigKey>
+		</Connection>
+	</KnobComposed>	
+	<KnobComposed>
+		<Tooltip>Headphone mix control</Tooltip>
+		<Size>26f,26f</Size>
+		<Knob>mixer/knob_grey<Variable name="color"/>.png</Knob>
+		<BackPath>mixer/knob_grey.png</BackPath>
+		<MinAngle>5</MinAngle>
+		<MaxAngle>310</MaxAngle>
+		<KnobCenterYOffset>0</KnobCenterYOffset>
+		<Pos>390,384</Pos>
+		<Connection>
+			<ConfigKey>[Master],headMix</ConfigKey>
+		</Connection>
+	</KnobComposed>
+	
+	<!--
+	**********************************************
+	RotaryFader- Channel filter and gain
+	**********************************************
+	-->
+	
+	<KnobComposed>
+		<Tooltip>Gain control</Tooltip>
+		<Size>24f,24f</Size>
+		<Knob>mixer/knob_grey_reversed<Variable name="color"/>.png</Knob>
+		<BackPath>mixer/knob_grey_reversed.png</BackPath>
+		<MinAngle>60</MinAngle>
+		<MaxAngle>350</MaxAngle>
+		<KnobCenterYOffset>0</KnobCenterYOffset>
+		<Pos>449,119</Pos>
+		<Connection>
+			<ConfigKey>[Channel1],pregain</ConfigKey>
+		</Connection>
+	</KnobComposed>
+	<KnobComposed>
+		<Tooltip>Treble filter control</Tooltip>
+		<Size>24f,24f</Size>
+		<Knob>mixer/knob_black<Variable name="color"/>.png</Knob>
+		<BackPath>mixer/knob_black.png</BackPath>
+		<MinAngle>0</MinAngle>
+		<MaxAngle>305</MaxAngle>
+		<KnobCenterYOffset>0</KnobCenterYOffset>
+		<Pos>449,155</Pos>
+		<Connection>
+			<ConfigKey>[Channel1],filterHigh</ConfigKey>
+		</Connection>
+	</KnobComposed>
+	<KnobComposed>
+		<Tooltip>Mid filter control</Tooltip>
+		<Size>24f,24f</Size>
+		<Knob>mixer/knob_black<Variable name="color"/>.png</Knob>
+		<BackPath>mixer/knob_black.png</BackPath>
+		<MinAngle>0</MinAngle>
+		<MaxAngle>305</MaxAngle>
+		<KnobCenterYOffset>0</KnobCenterYOffset>
+		<Pos>449,189</Pos>
+		<Connection>
+			<ConfigKey>[Channel1],filterMid</ConfigKey>
+		</Connection>
+	</KnobComposed>
+	<KnobComposed>
+		<Tooltip>Bass filter control</Tooltip>
+		<Size>24f,24f</Size>
+		<Knob>mixer/knob_black<Variable name="color"/>.png</Knob>
+		<BackPath>mixer/knob_black.png</BackPath>
+		<MinAngle>0</MinAngle>
+		<MaxAngle>305</MaxAngle>
+		<KnobCenterYOffset>0</KnobCenterYOffset>
+		<Pos>449,225</Pos>
+		<Connection>
+			<ConfigKey>[Channel1],filterLow</ConfigKey>
+		</Connection>
+	</KnobComposed>
+		
+	<KnobComposed>
+		<Tooltip>Gain control</Tooltip>
+		<Size>24f,24f</Size>
+		<Knob>mixer/knob_grey_reversed<Variable name="color"/>.png</Knob>
+		<BackPath>mixer/knob_grey_reversed.png</BackPath>
+		<MinAngle>60</MinAngle>
+		<MaxAngle>350</MaxAngle>
+		<KnobCenterYOffset>0</KnobCenterYOffset>
+		<Pos>502,119</Pos>
+		<Connection>
+			<ConfigKey>[Channel2],pregain</ConfigKey>
+		</Connection>
+	</KnobComposed>
+	<KnobComposed>
+		<Tooltip>Treble filter control</Tooltip>
+		<Size>24f,24f</Size>
+		<Knob>mixer/knob_black<Variable name="color"/>.png</Knob>
+		<BackPath>mixer/knob_black.png</BackPath>
+		<MinAngle>0</MinAngle>
+		<MaxAngle>305</MaxAngle>
+		<KnobCenterYOffset>0</KnobCenterYOffset>
+		<Pos>502,155</Pos>
+		<Connection>
+			<ConfigKey>[Channel2],filterHigh</ConfigKey>
+		</Connection>
+	</KnobComposed>
+	<KnobComposed>
+		<Tooltip>Mid filter control</Tooltip>
+		<Size>24f,24f</Size>
+		<Knob>mixer/knob_black<Variable name="color"/>.png</Knob>
+		<BackPath>mixer/knob_black.png</BackPath>
+		<MinAngle>0</MinAngle>
+		<MaxAngle>305</MaxAngle>
+		<KnobCenterYOffset>0</KnobCenterYOffset>
+		<Pos>502,189</Pos>
+		<Connection>
+			<ConfigKey>[Channel2],filterMid</ConfigKey>
+		</Connection>
+	</KnobComposed>
+	<KnobComposed>
+		<Tooltip>Bass filter control</Tooltip>
+		<Size>24f,24f</Size>
+		<Knob>mixer/knob_black<Variable name="color"/>.png</Knob>
+		<BackPath>mixer/knob_black.png</BackPath>
+		<MinAngle>0</MinAngle>
+		<MaxAngle>305</MaxAngle>
+		<KnobCenterYOffset>0</KnobCenterYOffset>
+		<Pos>502,225</Pos>
+		<Connection>
+			<ConfigKey>[Channel2],filterLow</ConfigKey>
+		</Connection>
+	</KnobComposed>
+
+	<!--
+	**********************************************
+	Visual- Spinning vinyl
+	**********************************************
+	-->	
+	
+<WidgetGroup>
+	<Pos>27,177</Pos>
+	<Layout>horizontal</Layout>
+	<Children>
+	<Spinny>
+	<Tooltip>Spinning vinyl&#10;</Tooltip>
+	<Channel>1</Channel>
+	
+	<Size>113,113</Size>
+	<PathBackground>turntable/spinny_background.png</PathBackground>
+	<PathForeground>turntable/spinny_foreground.png</PathForeground>
+	<PathGhost>turntable/spinny_foreground_ghost.png</PathGhost>
+	</Spinny>
+	</Children>
+</WidgetGroup>
+<WidgetGroup>
+	<Pos>686,177</Pos>
+	<Layout>horizontal</Layout>
+	<Children>
+	<Spinny>
+	<Tooltip>Spinning vinyl&#10;</Tooltip>
+	<Channel>2</Channel>
+	<Size>113,113</Size>
+	<PathBackground>turntable/spinny_background2.png</PathBackground>
+	<PathForeground>turntable/spinny_foreground2.png</PathForeground>
+	<PathGhost>turntable/spinny_foreground2_ghost.png</PathGhost>
+	</Spinny>															
+	</Children>
+</WidgetGroup>		
+
+</skin>
